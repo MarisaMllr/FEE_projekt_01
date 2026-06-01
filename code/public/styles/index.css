@@ -19,6 +19,7 @@
 :root {
     /* Colors */
     --color-bg: #ffffff;
+    --color-bg-light: #f6f6f6;
 
     --color-primary: #3131ff;
     --color-primary-hover: #000098;
@@ -56,11 +57,13 @@
 
 [data-theme="dark"] {
     --color-bg: #111827;
+    --color-bg-light: #1f2937;
     --color-text: #f6f6f6;
-    --color-text-light: #1f2937;
-    --color-border: #666666;
+    --color-text-light: #ffffff;
+    --color-border: #7e7e7e;
     --color-text-muted: #9ca3af;
     --color-primary-light: #1e3a5f;
+    --border-default: 1px solid var(--color-border);
 }
 
 /* =========================
@@ -249,7 +252,7 @@ button,
     grid-template-columns: repeat(2, 1fr);
     justify-content: space-between;
     align-items: start;
-    background-color: var(--color-text-light);
+    background-color: var(--color-bg-light);
     padding: var(--space-md);
     border-radius: var(--radius-lg);
     border: var(--border-default);
