@@ -63,33 +63,40 @@
 
             </section>
 
-            <dialog id="dialog-create-todo">
+            <dialog id="dialog-create-todo" class="dialog" aria-modal="true" role="dialog" aria-labelledby="dialog-title" hidden>
                 <header class="dialog__header">
-                    <h2>Todo erstellen</h2>
+                    <h2 id="dialog-title">Todo erstellen</h2>
                     <button id="btn-close" class="btn btn--close" aria-label="Dialog schliessen"></button>
                 </header>
-                <form method="dialog">
+                <form id="form-create-todo" class="dialog__form">
                     <label for="title">Titel</label>
                     <input type="text" id="title" name="title">
 
                     <fieldset class="rating">
-                        <legend class="sr-only">Wichtigkeit</legend>
+                        <legend>Wichtigkeit</legend>
                         
                         <input type="radio" name="importance" id="importance-5" value="5">
-                        <label for="importance-5">★</label>
+                        <label for="importance-5">⚡</label>
 
                         <input type="radio" name="importance" id="importance-4" value="4">
-                        <label for="importance-4">★</label>
+                        <label for="importance-4">⚡</label>
 
                         <input type="radio" name="importance" id="importance-3" value="3">
-                        <label for="importance-3">★</label>
+                        <label for="importance-3">⚡</label>
 
                         <input type="radio" name="importance" id="importance-2" value="2">
-                        <label for="importance-2">★</label>
+                        <label for="importance-2">⚡</label>
 
                         <input type="radio" name="importance" id="importance-1" value="1">
-                        <label for="importance-1">★</label>
+                        <label for="importance-1">⚡</label>
                     </fieldset>
+
+                    <label for="date_due">Fälligkeitsdatum</label>
+                    <input type="date" id="date_due" name="date_due">
+
+                    <label for="description">Beschreibung</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+
                     <div class="dialog__actions">
                         <button type="submit" class="btn btn--default" value="create">Erstellen</button>
                         <button type="submit" class="btn btn--default" value="create-overview">Erstellen & Übersicht</button>

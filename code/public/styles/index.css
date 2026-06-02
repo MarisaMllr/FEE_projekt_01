@@ -53,6 +53,10 @@
     /* Transitions/Animations */
     --transition-default: 0.3s ease;
     --transition-fast: 0.15s ease;
+
+    /* Font Sizes */
+    --font-size: 1rem;
+    --font-size-sm: 0.75rem;
 }
 
 [data-theme="dark"] {
@@ -285,6 +289,22 @@ button,
 /* =========================
    Dialog
 ========================= */
+.dialog {
+    border: var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    background-color: var(--color-bg-light);
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+}
+.dialog--open {
+    display: block;
+}
+
+.dialog__header {
+    color: var(--color-text);
+}
 
 .dialog__actions {
     display: flex;
@@ -292,6 +312,53 @@ button,
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-top: var(--space-md);
+}
+
+/* =========================
+   Form Elements
+========================= */
+label,
+legend {
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+fieldset.rating {
+    border: none;
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+fieldset.rating input {
+  display: none;
+}
+
+fieldset.rating label {
+  font-size: 1.5rem;
+  cursor: pointer;
+  filter: grayscale(100%);
+  transition: 0.2s;
+}
+
+fieldset.rating input:checked ~ label {
+  filter: none;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: var(--space-sm);
+    border: var(--border-default);
+    border-radius: var(--radius-sm);
+    background-color: white;
+    color: black;
+    margin-bottom: var(--space-md);
 }
 
 /* =========================
