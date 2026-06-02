@@ -70,7 +70,7 @@
                 </header>
                 <form id="form-create-todo" class="dialog__form">
                     <label for="title">Titel</label>
-                    <input type="text" id="title" name="title">
+                    <input type="text" id="title" name="title" required>
 
                     <fieldset class="rating">
                         <legend>Wichtigkeit</legend>
@@ -87,12 +87,17 @@
                         <input type="radio" name="importance" id="importance-2" value="2">
                         <label for="importance-2">⚡</label>
 
-                        <input type="radio" name="importance" id="importance-1" value="1">
+                        <input type="radio" name="importance" id="importance-1" value="1" checked>
                         <label for="importance-1">⚡</label>
                     </fieldset>
 
                     <label for="date_due">Fälligkeitsdatum</label>
-                    <input type="date" id="date_due" name="date_due">
+                    <input type="date" id="date_due" name="date_due" required>
+
+                    <label for="completed">
+                        <input type="checkbox" id="completed" name="completed">
+                        Erledigt
+                    </label>
 
                     <label for="description">Beschreibung</label>
                     <textarea id="description" name="description" rows="4"></textarea>

@@ -286,6 +286,18 @@ button,
     padding: 0 var(--space-md);
 }
 
+.todo-item {
+    border: var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    background-color: var(--color-bg-light);
+    display: flex;
+}
+
+.todo-item p {
+    white-space: pre-wrap;
+}
+
 /* =========================
    Dialog
 ========================= */
@@ -360,6 +372,12 @@ textarea {
     color: black;
     margin-bottom: var(--space-md);
 }
+
+input[type="checkbox"] {
+    margin-right: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
 
 /* =========================
    Footer
