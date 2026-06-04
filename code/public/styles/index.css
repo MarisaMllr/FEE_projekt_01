@@ -243,6 +243,10 @@ button,
    Todos Section
 ========================= */
 
+#todos.hidden {
+    display: none;
+}
+
 .todos__header {
     display: grid;
     gap: var(--space-md);
@@ -292,10 +296,23 @@ button,
     padding: var(--space-md);
     background-color: var(--color-bg-light);
     display: flex;
+    gap: 2rem;
+    align-items: center;
 }
 
 .todo-item p {
     white-space: pre-wrap;
+}
+
+.todo-content {
+    flex-grow: 1;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: 200px auto 200px;
+}
+
+.todo-importance {
+    place-self: start end;
 }
 
 /* =========================

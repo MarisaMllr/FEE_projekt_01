@@ -5,12 +5,12 @@ export default class TodoController {
     this.view = view;
     this.service = service;
 
-    // Events mit Handlern verbinden
     this.view.bindCreateTodo(this.handleOpenDialog.bind(this));
     this.view.bindCloseDialog(this.handleCloseDialog.bind(this));
+    this.view.bindEditTodo(this.handleEditTodo.bind(this));
     this.view.bindSubmitForm(this.handleSubmitForm.bind(this));
 
-    // Gespeicherte Todos beim Start laden
+    // load persisted todos on init
     this.handleRenderTodos();
   }
 
@@ -18,21 +18,38 @@ export default class TodoController {
     this.view.openCreateDialog();
   }
 
-  handleCloseDialog() {
+  handleEditTodo(id) {
+    const todo = this.service.getTodoById(id);
+    this.view.openEditDialog(todo);
+  }
+
+  handleCloseDialog(event) {
+    event.preventDefault();
     this.view.closeDialog();
   }
 
-  // Neues Todo aus Formulardaten erstellen, speichern und Liste aktualisieren
   handleSubmitForm(formData) {
-    const newTodo = new Todo(
-      formData.title,
-      formData.dateDue,
-      formData.importance,
-      formData.description,
-      formData.completed
-    );
-    this.service.saveTodo(newTodo);
-    this.view.closeDialog();
+    if (formData.editingId) {
+      this.service.updateTodo(formData.editingId, {
+        title: formData.title,
+        dateDue: formData.dateDue,
+        importance: formData.importance,
+        description: formData.description,
+        completed: formData.completed,
+      });
+    } else {
+      const newTodo = new Todo(
+        formData.title,
+        formData.dateDue,
+        formData.importance,
+        formData.description,
+        formData.completed
+      );
+      this.service.saveTodo(newTodo);
+    }
+    if (formData.action === 'create-overview') {
+      this.view.closeDialog();
+    } 
     this.handleRenderTodos();
   }
 
