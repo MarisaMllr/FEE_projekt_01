@@ -320,6 +320,13 @@ button,
     z-index: 9;
 }
 
+.empty-todos {
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    text-align: center;
+}
+
 .todo-item {
     position: relative;
     border: var(--border-default);

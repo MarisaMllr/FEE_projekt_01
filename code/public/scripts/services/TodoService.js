@@ -1,13 +1,17 @@
 export default class TodoService {
+
+  constructor() {
+    this.todos = this.getAllTodos();
+  }
+
   getAllTodos() {
-    const todos = localStorage.getItem('todos');
-    return todos ? JSON.parse(todos) : [];
+    const savedTodos = localStorage.getItem('todos');
+    return savedTodos ? JSON.parse(savedTodos) : [];
   }
 
   saveTodo(todo) {
-    const todos = this.getAllTodos();
-    todos.push(todo);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    this.todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 
   getTodoById(id) {
@@ -15,17 +19,15 @@ export default class TodoService {
   }
 
   updateTodo(id, data) {
-    const todos = this.getAllTodos();
-    const index = todos.findIndex(todo => todo.id === id);
+    const index = this.todos.findIndex(todo => todo.id === id);
     if (index !== -1) {
-      todos[index] = { ...todos[index], ...data };
-      localStorage.setItem('todos', JSON.stringify(todos));
+      this.todos[index] = { ...this.todos[index], ...data };
+      localStorage.setItem('todos', JSON.stringify(this.todos));
     }
   }
 
   deleteTodo(id) {
-    const todos = this.getAllTodos();
-    const filteredTodos = todos.filter(todo => todo.id !== id);
+    const filteredTodos = this.todos.filter(todo => todo.id !== id);
     localStorage.setItem('todos', JSON.stringify(filteredTodos));
   }
 }

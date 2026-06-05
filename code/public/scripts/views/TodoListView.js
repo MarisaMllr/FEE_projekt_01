@@ -4,6 +4,14 @@ export default class TodoListView {
     const todoList = document.querySelector('#todos');
     todoList.innerHTML = '';
 
+    if (todos.length === 0) {
+      todoList.innerHTML = `
+        <div class="empty-todos">
+          Keine Todos gefunden !?
+        </div>
+      `;
+    }
+
     todos.forEach(todo => {
       const listItem = document.createElement('div');
       listItem.classList.add('todo-item');
@@ -44,13 +52,18 @@ export default class TodoListView {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const due = new Date(dateDue);
-    due.setHours(0, 0, 0, 0);
-    const diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
+    if (!isNaN(due)) {
+      due.setHours(0, 0, 0, 0);
+      const diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return 'Heute fällig';
-    if (diffDays === 1) return 'in 1 Tag';
-    if (diffDays > 1) return `in ${diffDays} Tagen`;
-    if (diffDays === -1) return 'vor 1 Tag';
-    return `vor ${Math.abs(diffDays)} Tagen`;
+      if (diffDays === 0) return 'Heute fällig';
+      if (diffDays === 1) return 'in 1 Tag';
+      if (diffDays > 1) return `in ${diffDays} Tagen`;
+      if (diffDays === -1) return 'vor 1 Tag';
+      return `vor ${Math.abs(diffDays)} Tagen`;
+    } else {
+      return 'Irgendwann';
+    }
+    
   }
 }
