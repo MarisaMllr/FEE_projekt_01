@@ -44,24 +44,25 @@
                         <button class="sort__toggle btn btn--default" aria-expanded="false" aria-controls="sort-options">
                             Sortieren
                         </button>
-                        <div class="sort__options">
-                            <div id="sort-options" hidden>
-                                <button class="btn btn--default btn--sort" data-sort="title">Name</button>
-                                <button class="btn btn--default btn--sort" data-sort="date_due">Nach Fälligkeitsdatum</button>
-                                <button class="btn btn--default btn--sort" data-sort="date_create">Nach Erstellungsdatum</button>
-                                <button class="btn btn--default btn--sort" data-sort="importance">Nach Wichtigkeit</button>
-                            </div>
-                            <button class="btn btn--default btn--filter">
-                                Nur offene
-                            </button>
+
+                        <div id="sort-options">
+                            <button class="btn btn--default btn--sort" data-sort="title">Name</button>
+                            <button class="btn btn--default btn--sort" data-sort="date_due">Fälligkeitsdatum</button>
+                            <button class="btn btn--default btn--sort" data-sort="date_create">Erstellungsdatum</button>
+                            <button class="btn btn--default btn--sort" data-sort="importance">Wichtigkeit</button>
                         </div>
+                        <button class="btn btn--default btn--filter">
+                            Offene
+                        </button>
+
                     </div>
                 </header>
+                <div id="todos">
+
+                </div>
             </section>
 
-            <section id="todos">
-
-            </section>
+            
 
             <dialog id="dialog-create-todo" class="dialog" aria-modal="true" role="dialog" aria-labelledby="dialog-title" hidden>
                 <header class="dialog__header">

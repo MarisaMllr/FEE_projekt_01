@@ -2,12 +2,18 @@ export default class TodoDialogView {
 
   #openDialog() {
     const dialog = document.querySelector('#dialog-create-todo');
+    const todoHeader = document.querySelector('.todos__header');
     const headerHeight = document.querySelector('#main-header').offsetHeight;
     const todoList = document.querySelector('#todos');
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
     dialog.style.top = `${headerHeight + rem}px`;
     dialog.classList.add('dialog--open');
     todoList.classList.add('hidden');
+    todoHeader.classList.add('hidden');
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
   }
 
   openCreate() {
@@ -28,7 +34,9 @@ export default class TodoDialogView {
   close() {
     const dialog = document.querySelector('#dialog-create-todo');
     const todoList = document.querySelector('#todos');
+    const todoHeader = document.querySelector('.todos__header');
     todoList.classList.remove('hidden');
+    todoHeader.classList.remove('hidden');
     dialog.classList.remove('dialog--open');
     document.querySelector('#form-create-todo').reset();
   }
