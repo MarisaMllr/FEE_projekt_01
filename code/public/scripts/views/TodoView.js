@@ -22,4 +22,5 @@ export default class TodoView {
   openEditDialog(todo) { this.#dialog.openEdit(todo); }
   closeDialog() { this.#dialog.close(); }
   renderTodos(todos) { this.#list.render(todos); }
+  setEditingId(id) { this.#dialog.setEditingId(id); }
 }

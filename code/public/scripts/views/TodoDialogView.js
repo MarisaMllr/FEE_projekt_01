@@ -1,15 +1,21 @@
 export default class TodoDialogView {
 
+  constructor () {
+    this.dialog = document.querySelector('#dialog-create-todo');
+    this.todoList = document.querySelector('#todos');
+    this.todoHeader = document.querySelector('.todos__header');
+    this.form = document.querySelector('#form-create-todo');
+    this.btnSave = this.form.querySelector('.btn--save');
+    this.btnSaveOverview = this.form.querySelector('.btn--save-overview');
+  }
+
   #openDialog() {
-    const dialog = document.querySelector('#dialog-create-todo');
-    const todoHeader = document.querySelector('.todos__header');
     const headerHeight = document.querySelector('#main-header').offsetHeight;
-    const todoList = document.querySelector('#todos');
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    dialog.style.top = `${headerHeight + rem}px`;
-    dialog.classList.add('dialog--open');
-    todoList.classList.add('hidden');
-    todoHeader.classList.add('hidden');
+    this.dialog.style.top = `${headerHeight + rem}px`;
+    this.dialog.classList.add('dialog--open');
+    this.todoList.classList.add('hidden');
+    this.todoHeader.classList.add('hidden');
     window.scrollTo({
       top: 0,
       behavior: 'instant'
@@ -18,32 +24,31 @@ export default class TodoDialogView {
 
   openCreate() {
     this.#openDialog();
+    this.form.querySelector('.btn--save').innerText = 'Erstellen';
+    this.form.querySelector('.btn--save-overview').innerText = 'Erstellen & Übersicht';
   }
 
   openEdit(todo) {
     this.#openDialog();
-    const form = document.querySelector('#form-create-todo');
-    form.querySelector('#editing-id').value = todo.id;
-    form.querySelector('#title').value = todo.title;
-    form.querySelector('#date_due').value = todo.dateDue;
-    form.querySelector(`#importance-${todo.importance}`).checked = true;
-    form.querySelector('#completed').checked = todo.completed;
-    form.querySelector('#description').value = todo.description;
+    this.form.querySelector('.btn--save').innerText = 'Speichern';
+    this.form.querySelector('.btn--save-overview').innerText = 'Speichern & Übersicht';
+    this.form.querySelector('#editing-id').value = todo.id;
+    this.form.querySelector('#title').value = todo.title;
+    this.form.querySelector('#date_due').value = todo.dateDue;
+    this.form.querySelector(`#importance-${todo.importance}`).checked = true;
+    this.form.querySelector('#completed').checked = todo.completed;
+    this.form.querySelector('#description').value = todo.description;
   }
 
   close() {
-    const dialog = document.querySelector('#dialog-create-todo');
-    const todoList = document.querySelector('#todos');
-    const todoHeader = document.querySelector('.todos__header');
-    todoList.classList.remove('hidden');
-    todoHeader.classList.remove('hidden');
-    dialog.classList.remove('dialog--open');
+    this.todoList.classList.remove('hidden');
+    this.todoHeader.classList.remove('hidden');
+    this.dialog.classList.remove('dialog--open');
     document.querySelector('#form-create-todo').reset();
   }
 
   bindResetForm(handler) {
-    const form = document.querySelector('#form-create-todo');
-    form.addEventListener('reset', (event) => {
+    this.form.addEventListener('reset', (event) => {
       event.preventDefault();
       handler();
     });
@@ -55,8 +60,7 @@ export default class TodoDialogView {
   }
 
   bindSubmit(handler) {
-    const form = document.querySelector('#form-create-todo');
-    form.addEventListener('submit', (event) => {
+    this.form.addEventListener('submit', (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const submitButton = event.submitter;
@@ -70,6 +74,15 @@ export default class TodoDialogView {
 
         action: submitButton?.value || null,
       });
+
+      if (submitButton.value === 'create') {
+        this.btnSave.innerText = 'Speichern';
+        this.btnSaveOverview.innerText = 'Speichern & Übersicht';
+      }
     });
+  }
+
+  setEditingId(id) {
+    this.form.querySelector('#editing-id').value = id;
   }
 }

@@ -46,6 +46,7 @@ export default class TodoController {
         formData.completed
       );
       this.service.saveTodo(newTodo);
+      this.view.setEditingId(newTodo.id);
     }
     if (formData.action === 'create-overview') {
       this.view.closeDialog();
