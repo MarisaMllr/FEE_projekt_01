@@ -12,20 +12,21 @@ export default class TodoListView {
       listItem.innerHTML = `
         <div class="todo-content">
           <span class="todo-date-due"></span>
-          <h3></h3>
+          <h3 class="todo-title"></h3>
           <span class="todo-importance"></span>
-          <label>Erledigt
+          <label class="todo-state">
             <input type="checkbox" ${todo.completed ? 'checked' : ''} disabled>
+            ${todo.completed ? 'Erledigt' : 'Offen'}
           </label>
-          <p></p>
+          <p class="todo-description"></p>
         </div>
         <button class="btn btn--edit btn--default" data-id="${todo.id}">Bearbeiten</button>
       `;
 
       listItem.querySelector('.todo-date-due').textContent = this.#getRelativeDueDate(todo.dateDue);
-      listItem.querySelector('h3').textContent = todo.title;
+      listItem.querySelector('.todo-title').textContent = todo.title;
       listItem.querySelector('.todo-importance').textContent = '⚡'.repeat(Number(todo.importance));
-      listItem.querySelector('p').textContent = todo.description;
+      listItem.querySelector('.todo-description').textContent = todo.description;
 
       todoList.appendChild(listItem);
     });
