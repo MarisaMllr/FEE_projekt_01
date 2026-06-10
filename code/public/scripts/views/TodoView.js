@@ -27,4 +27,6 @@ export default class TodoView {
   bindFilterTodos(handler) { this.#list.bindFilterTodos(handler); }
   setActiveSortButton(sort, direction) { this.#list.setActiveSortButton(sort, direction); }
   setFilterButton(active) { this.#list.setFilterButton(active); }
+  bindDeleteTodo(handler) { this.#list.bindDelete(handler); }
+  setDynamicTitle(todos) { this.#list.setDynamicTitle(todos); }
 }

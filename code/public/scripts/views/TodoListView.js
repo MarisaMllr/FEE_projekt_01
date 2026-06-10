@@ -54,7 +54,10 @@ export default class TodoListView {
           </label>
           <p class="todo-description"></p>
         </div>
-        <button class="btn btn--edit btn--default" data-id="${todo.id}">Bearbeiten</button>
+        <div class="todo-actions">
+          <button class="btn btn--edit btn--default" data-id="${todo.id}">✎</button>
+          <button class="btn btn--delete btn--default" data-id="${todo.id}">🗑</button>
+        </div>
       `;
 
       listItem.querySelector('.todo-date-due').textContent = this.#getRelativeDueDate(todo.dateDue);
@@ -63,6 +66,13 @@ export default class TodoListView {
       listItem.querySelector('.todo-description').textContent = todo.description;
 
       todoList.appendChild(listItem);
+    });
+  }
+
+  bindDelete(handler) {
+    document.querySelector('#todos').addEventListener('click', (event) => {
+      const btn = event.target.closest('.btn--delete');
+      if (btn) handler(btn.dataset.id);
     });
   }
 
@@ -91,5 +101,25 @@ export default class TodoListView {
       return 'Irgendwann';
     }
     
+  }
+
+  setDynamicTitle(todos) {
+    const total = todos.length;
+    const open = todos.filter(todo => !todo.completed).length;
+    const ratio = open / total;
+
+    let message;
+    if (total === 0) {
+      message = '';
+    } else if (ratio === 1) {
+      message = 'Huch… noch nichts erledigt!';
+    } else if (ratio >= 0.5) {
+      message = 'Schritt für Schritt, bald geschafft.';
+    } else if (ratio > 0) {
+      message = 'Super, fast alles geschafft.';
+    } else {
+      message = "Alles erledigt!"
+    }
+    document.querySelector('.todos__header__message').textContent = message;
   }
 }

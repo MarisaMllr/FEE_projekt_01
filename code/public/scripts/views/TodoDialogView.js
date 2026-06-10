@@ -45,6 +45,7 @@ export default class TodoDialogView {
     this.todoHeader.classList.remove('hidden');
     this.dialog.classList.remove('dialog--open');
     document.querySelector('#form-create-todo').reset();
+    document.querySelector('#editing-id').value = '';
   }
 
   bindResetForm(handler) {

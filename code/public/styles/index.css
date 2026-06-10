@@ -363,7 +363,7 @@ button,
 }
 
 @media screen and (max-width: 799px) {
-    .btn--edit {
+    .todo-actions {
         position: absolute;
         right: var(--space-sm);
         top: var(--space-sm);

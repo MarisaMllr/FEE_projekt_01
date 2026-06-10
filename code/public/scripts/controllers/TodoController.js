@@ -21,6 +21,7 @@ export default class TodoController {
     this.view.bindSubmitForm(this.handleSubmitForm.bind(this));
     this.view.bindSortTodos(this.handleSortTodos.bind(this));
     this.view.bindFilterTodos(this.handleFilterTodos.bind(this));
+    this.view.bindDeleteTodo(this.handleDeleteTodo.bind(this));
   }
 
   handleFilterTodos() {
@@ -46,6 +47,9 @@ export default class TodoController {
 
   applyFilterAndSort() {
     let todos = this.service.getAllTodos();
+
+
+    this.view.setDynamicTitle(todos);
 
     // Filter
     if (this.filterActive) {
@@ -116,6 +120,11 @@ export default class TodoController {
     if (formData.action === 'create-overview') {
       this.view.closeDialog();
     } 
+    this.applyFilterAndSort();
+  }
+
+  handleDeleteTodo(id) {
+    this.service.deleteTodo(id);
     this.applyFilterAndSort();
   }
 }
