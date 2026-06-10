@@ -210,8 +210,11 @@ button,
     fill: var(--color-bg);
 }
 
-.btn--sort::after {
-    content: '▼';
+.btn--sort.active-asc::after {
+    content: " ▼";
+}
+.btn--sort.active-desc::after {
+    content: " ▲";
 }
 
 /* =========================

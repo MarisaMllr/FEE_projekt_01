@@ -5,13 +5,73 @@ export default class TodoController {
     this.view = view;
     this.service = service;
 
+    this.sortDirection = 1;
+    this.currentSort = null;
+
+    this.filterActive = false;
+
+    const savedSort = localStorage.getItem("sortOption") || "title";
+    const savedDirection = Number(localStorage.getItem("sortDirection")) || 1;
+    this.sortDirection = savedDirection;
+    this.handleSortTodos(savedSort);
+
     this.view.bindCreateTodo(this.handleOpenDialog.bind(this));
     this.view.bindCloseDialog(this.handleCloseDialog.bind(this));
     this.view.bindEditTodo(this.handleEditTodo.bind(this));
     this.view.bindSubmitForm(this.handleSubmitForm.bind(this));
+    this.view.bindSortTodos(this.handleSortTodos.bind(this));
+    this.view.bindFilterTodos(this.handleFilterTodos.bind(this));
 
     // load persisted todos on init
     this.handleRenderTodos();
+  }
+
+  handleFilterTodos() {
+    this.filterActive = !this.filterActive;
+    this.view.setFilterButton(this.filterActive);
+    this.applyFilterAndSort();
+  }
+
+  handleSortTodos(sort) {
+    if (this.currentSort === sort) {
+      this.sortDirection *= -1;
+    } else {
+      this.sortDirection = 1;
+    }
+    this.currentSort = sort;
+
+    localStorage.setItem("sortOption", sort);
+    localStorage.setItem("sortDirection", this.sortDirection);
+
+    this.view.setActiveSortButton(sort, this.sortDirection);
+    this.applyFilterAndSort();
+  }
+
+  applyFilterAndSort() {
+    let todos = this.service.getAllTodos();
+
+    // Filter
+    if (this.filterActive) {
+      todos = todos.filter(todo => !todo.completed);
+    }
+
+    // Sortierung
+    if (this.currentSort) {
+      todos = [...todos].sort((a, b) => {
+        const valA = a[this.currentSort];
+        const valB = b[this.currentSort];
+
+        if (this.currentSort === 'dateDue' || this.currentSort === 'dateCreated') {
+          return (new Date(valA) - new Date(valB)) * this.sortDirection;
+        }
+        if (!isNaN(valA)) {
+          return (Number(valA) - Number(valB)) * this.sortDirection;
+        }
+        return valA.localeCompare(valB) * this.sortDirection;
+      });
+    }
+
+    this.view.renderTodos(todos);
   }
 
   handleOpenDialog() {
@@ -54,8 +114,8 @@ export default class TodoController {
     this.handleRenderTodos();
   }
 
-  handleRenderTodos() {
+  handleRenderTodos(sort) {
     const todos = this.service.getAllTodos();
-    this.view.renderTodos(todos);
+    this.view.renderTodos(todos, sort);
   }
 }

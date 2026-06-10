@@ -1,5 +1,31 @@
 export default class TodoListView {
 
+  bindSort(handler) {
+    const sortsOptions = document.querySelectorAll('.btn--sort');
+    sortsOptions.forEach(btn => btn.addEventListener('click', () => {
+      handler(btn.dataset.sort);
+    }))
+  }
+
+  bindFilterTodos(handler) {
+    const filterBtn = document.querySelector('.btn--filter');
+    filterBtn.addEventListener('click', () => handler());
+  }
+
+  setActiveSortButton(sort, direction) {
+    document.querySelectorAll('.btn--sort').forEach(btn => {
+      btn.classList.remove('active-asc', 'active-desc');
+    });
+    const activeClass = direction === 1 ? 'active-asc' : 'active-desc';
+    document.querySelector(`[data-sort="${sort}"]`).classList.add(activeClass);
+  }
+
+  setFilterButton(active) {
+    const btn = document.querySelector('.btn--filter');
+    btn.classList.toggle('active', active);
+    btn.textContent = active ? 'Alle' : 'Offene';
+  }
+
   render(todos) {
     const todoList = document.querySelector('#todos');
     todoList.innerHTML = '';

@@ -23,4 +23,8 @@ export default class TodoView {
   closeDialog() { this.#dialog.close(); }
   renderTodos(todos) { this.#list.render(todos); }
   setEditingId(id) { this.#dialog.setEditingId(id); }
+  bindSortTodos(sort) { this.#list.bindSort(sort); }
+  bindFilterTodos(handler) { this.#list.bindFilterTodos(handler); }
+  setActiveSortButton(sort, direction) { this.#list.setActiveSortButton(sort, direction); }
+  setFilterButton(active) { this.#list.setFilterButton(active); }
 }
