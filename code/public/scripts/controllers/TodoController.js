@@ -10,8 +10,8 @@ export default class TodoController {
 
     this.filterActive = false;
 
-    const savedSort = localStorage.getItem("sortOption") || "title";
-    const savedDirection = Number(localStorage.getItem("sortDirection")) || 1;
+    const savedSort = localStorage.getItem('sortOption') || 'title';
+    const savedDirection = Number(localStorage.getItem('sortDirection')) || 1;
     this.sortDirection = savedDirection;
     this.handleSortTodos(savedSort);
 
@@ -40,8 +40,8 @@ export default class TodoController {
     }
     this.currentSort = sort;
 
-    localStorage.setItem("sortOption", sort);
-    localStorage.setItem("sortDirection", this.sortDirection);
+    localStorage.setItem('sortOption', sort);
+    localStorage.setItem('sortDirection', this.sortDirection);
 
     this.view.setActiveSortButton(sort, this.sortDirection);
     this.applyFilterAndSort();
@@ -62,11 +62,19 @@ export default class TodoController {
         const valB = b[this.currentSort];
 
         if (this.currentSort === 'dateDue' || this.currentSort === 'dateCreated') {
-          return (new Date(valA) - new Date(valB)) * this.sortDirection;
+          const dateA = new Date(valA);
+          const dateB = new Date(valB);
+          
+          if (isNaN(dateA)) return 1;
+          if (isNaN(dateB)) return -1;
+          
+          return (dateA - dateB) * this.sortDirection;
         }
+
         if (!isNaN(valA)) {
           return (Number(valA) - Number(valB)) * this.sortDirection;
         }
+        
         return valA.localeCompare(valB) * this.sortDirection;
       });
     }
