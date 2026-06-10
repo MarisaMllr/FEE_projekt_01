@@ -21,9 +21,6 @@ export default class TodoController {
     this.view.bindSubmitForm(this.handleSubmitForm.bind(this));
     this.view.bindSortTodos(this.handleSortTodos.bind(this));
     this.view.bindFilterTodos(this.handleFilterTodos.bind(this));
-
-    // load persisted todos on init
-    this.handleRenderTodos();
   }
 
   handleFilterTodos() {
@@ -119,11 +116,6 @@ export default class TodoController {
     if (formData.action === 'create-overview') {
       this.view.closeDialog();
     } 
-    this.handleRenderTodos();
-  }
-
-  handleRenderTodos(sort) {
-    const todos = this.service.getAllTodos();
-    this.view.renderTodos(todos, sort);
+    this.applyFilterAndSort();
   }
 }
