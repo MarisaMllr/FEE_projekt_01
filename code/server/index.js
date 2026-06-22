@@ -15,6 +15,9 @@ const port = process.env.PORT || 8081;
 app.use(express.static(CONFIG.public));
 app.use(express.json());
 app.use("/api/todos", todoRouter);
+app.use((req, res) => {
+    res.redirect('/');
+});
 
 app.listen(port, hostname, (error) => {
     if (error) {
