@@ -1,32 +1,38 @@
 export default class TodoService {
-
-  getAllTodos() {
-    const savedTodos = localStorage.getItem('todos');
-    return savedTodos ? JSON.parse(savedTodos) : [];
-  }
-
-  saveTodo(todo) {
-    const todos = this.getAllTodos();
-    todos.push(todo);
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }
-
-  getTodoById(id) {
-    return this.getAllTodos().find(todo => todo.id === id);
-  }
-
-  updateTodo(id, data) {
-    const todos = this.getAllTodos();
-    const index = todos.findIndex(todo => todo.id === id);
-    if (index !== -1) {
-      todos[index] = { ...todos[index], ...data };
-      localStorage.setItem('todos', JSON.stringify(todos));
+    async getAllTodos() {
+        const res = await fetch("/api/todos");
+        return res.json();
     }
-  }
 
-  deleteTodo(id) {
-    const todos = this.getAllTodos();
-    const filtered = todos.filter(todo => todo.id !== id);
-    localStorage.setItem('todos', JSON.stringify(filtered));
-  }
+    async saveTodo(todo) {
+        const res = await fetch("/api/todos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(todo),
+        });
+        return res.json();
+    }
+
+    async getTodoById(id) {
+        const res = await fetch(`/api/todos/${id}`);
+        return res.json();
+    }
+
+    async updateTodo(id, data) {
+        await fetch(`/api/todos/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    }
+
+    async deleteTodo(id) {
+        await fetch(`/api/todos/${id}`, {
+            method: "DELETE",
+        });
+    }
 }
