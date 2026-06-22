@@ -1,4 +1,4 @@
-import { todoService } from "../services/TodoService.js";
+import { todoService } from '../services/TodoService.js';
 
 class TodoController {
     async getAll(req, res) {
@@ -7,7 +7,7 @@ class TodoController {
             res.json(todos);
         } catch (err) {
             res.status(500).json({
-                message: "Fehler beim Laden der Todos",
+                message: 'Fehler beim Laden der Todos',
                 error: err.message,
             });
         }
@@ -19,7 +19,7 @@ class TodoController {
             res.json(todo);
         } catch (err) {
             res.status(500).json({
-                message: "Fehler beim Laden des Todos",
+                message: 'Fehler beim Laden des Todos',
                 error: err.message,
             });
         }
@@ -31,7 +31,7 @@ class TodoController {
             res.status(201).json(todo);
         } catch (err) {
             res.status(500).json({
-                message: "Fehler beim Erstellen",
+                message: 'Fehler beim Erstellen',
                 error: err.message,
             });
         }
@@ -40,10 +40,10 @@ class TodoController {
     async update(req, res) {
         try {
             await todoService.update(req.params.id, req.body);
-            res.json({ message: "Todo aktualisiert" });
+            res.json({ message: 'Todo aktualisiert' });
         } catch (err) {
             res.status(500).json({
-                message: "Fehler beim Aktualisieren",
+                message: 'Fehler beim Aktualisieren',
                 error: err.message,
             });
         }
@@ -52,10 +52,10 @@ class TodoController {
     async delete(req, res) {
         try {
             await todoService.delete(req.params.id);
-            res.json({ message: "Todo gelöscht" });
+            res.json({ message: 'Todo gelöscht' });
         } catch (err) {
             res.status(500).json({
-                message: "Fehler beim Löschen",
+                message: 'Fehler beim Löschen',
                 error: err.message,
             });
         }

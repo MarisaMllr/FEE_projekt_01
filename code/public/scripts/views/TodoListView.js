@@ -1,37 +1,37 @@
 export default class TodoListView {
     bindSort(handler) {
-        const sortsOptions = document.querySelectorAll(".btn--sort");
+        const sortsOptions = document.querySelectorAll('.btn--sort');
         sortsOptions.forEach((btn) =>
-            btn.addEventListener("click", () => {
+            btn.addEventListener('click', () => {
                 handler(btn.dataset.sort);
             }),
         );
     }
 
     bindFilterTodos(handler) {
-        const filterBtn = document.querySelector(".btn--filter");
-        filterBtn.addEventListener("click", () => handler());
+        const filterBtn = document.querySelector('.btn--filter');
+        filterBtn.addEventListener('click', () => handler());
     }
 
     setActiveSortButton(sort, direction) {
-        document.querySelectorAll(".btn--sort").forEach((btn) => {
-            btn.classList.remove("active-asc", "active-desc");
+        document.querySelectorAll('.btn--sort').forEach((btn) => {
+            btn.classList.remove('active-asc', 'active-desc');
         });
-        const activeClass = direction === 1 ? "active-asc" : "active-desc";
+        const activeClass = direction === 1 ? 'active-asc' : 'active-desc';
         document
             .querySelector(`[data-sort="${sort}"]`)
             .classList.add(activeClass);
     }
 
     setFilterButton(active) {
-        const btn = document.querySelector(".btn--filter");
-        btn.classList.toggle("active", active);
-        btn.textContent = active ? "Alle" : "Offene";
+        const btn = document.querySelector('.btn--filter');
+        btn.classList.toggle('active', active);
+        btn.textContent = active ? 'Alle' : 'Offene';
     }
 
     render(todos) {
-        const todoList = document.querySelector("#todos");
-        todoList.innerHTML = "";
+        const todoList = document.querySelector('#todos');
+        todoList.innerHTML = '';
 
         if (todos.length === 0) {
             todoList.innerHTML = `
@@ -42,8 +42,8 @@ export default class TodoListView {
         }
 
         todos.forEach((todo) => {
-            const listItem = document.createElement("div");
-            listItem.classList.add("todo-item");
+            const listItem = document.createElement('div');
+            listItem.classList.add('todo-item');
 
             // set structure with innerHTML, user data via textContent to prevent XSS
             listItem.innerHTML = `
@@ -52,8 +52,8 @@ export default class TodoListView {
           <h3 class="todo-title"></h3>
           <span class="todo-importance"></span>
           <label class="todo-state">
-            <input type="checkbox" ${todo.completed ? "checked" : ""} disabled>
-            ${todo.completed ? "Erledigt" : "Offen"}
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} disabled>
+            ${todo.completed ? 'Erledigt' : 'Offen'}
           </label>
           <p class="todo-description"></p>
         </div>
@@ -63,12 +63,12 @@ export default class TodoListView {
         </div>
       `;
 
-            listItem.querySelector(".todo-date-due").textContent =
+            listItem.querySelector('.todo-date-due').textContent =
                 this.#getRelativeDueDate(todo.dateDue);
-            listItem.querySelector(".todo-title").textContent = todo.title;
-            listItem.querySelector(".todo-importance").textContent =
-                "⚡".repeat(Number(todo.importance));
-            listItem.querySelector(".todo-description").textContent =
+            listItem.querySelector('.todo-title').textContent = todo.title;
+            listItem.querySelector('.todo-importance').textContent =
+                '⚡'.repeat(Number(todo.importance));
+            listItem.querySelector('.todo-description').textContent =
                 todo.description;
 
             todoList.appendChild(listItem);
@@ -76,22 +76,22 @@ export default class TodoListView {
     }
 
     showError(message) {
-        document.querySelector("#todos").innerHTML = `
+        document.querySelector('#todos').innerHTML = `
             <div class="error-message">${message}</div>
         `;
     }
 
     bindDelete(handler) {
-        document.querySelector("#todos").addEventListener("click", (event) => {
-            const btn = event.target.closest(".btn--delete");
+        document.querySelector('#todos').addEventListener('click', (event) => {
+            const btn = event.target.closest('.btn--delete');
             if (btn) handler(btn.dataset.id);
         });
     }
 
     // event delegation catches dynamically rendered buttons
     bindEdit(handler) {
-        document.querySelector("#todos").addEventListener("click", (event) => {
-            const btn = event.target.closest(".btn--edit");
+        document.querySelector('#todos').addEventListener('click', (event) => {
+            const btn = event.target.closest('.btn--edit');
             if (btn) handler(btn.dataset.id);
         });
     }
@@ -104,13 +104,13 @@ export default class TodoListView {
             due.setHours(0, 0, 0, 0);
             const diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
 
-            if (diffDays === 0) return "Heute fällig";
-            if (diffDays === 1) return "in 1 Tag";
+            if (diffDays === 0) return 'Heute fällig';
+            if (diffDays === 1) return 'in 1 Tag';
             if (diffDays > 1) return `in ${diffDays} Tagen`;
-            if (diffDays === -1) return "vor 1 Tag";
+            if (diffDays === -1) return 'vor 1 Tag';
             return `vor ${Math.abs(diffDays)} Tagen`;
         } else {
-            return "Irgendwann";
+            return 'Irgendwann';
         }
     }
 
@@ -121,16 +121,16 @@ export default class TodoListView {
 
         let message;
         if (total === 0) {
-            message = "";
+            message = '';
         } else if (ratio === 1) {
-            message = "Huch… noch nichts erledigt!";
+            message = 'Huch… noch nichts erledigt!';
         } else if (ratio >= 0.5) {
-            message = "Schritt für Schritt, bald geschafft.";
+            message = 'Schritt für Schritt, bald geschafft.';
         } else if (ratio > 0) {
-            message = "Super, fast alles geschafft.";
+            message = 'Super, fast alles geschafft.';
         } else {
-            message = "Alles erledigt!";
+            message = 'Alles erledigt!';
         }
-        document.querySelector(".todos__header__message").textContent = message;
+        document.querySelector('.todos__header__message').textContent = message;
     }
 }

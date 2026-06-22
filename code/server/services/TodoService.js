@@ -1,10 +1,10 @@
-import { CONFIG } from "../config.js";
-import Datastore from "@seald-io/nedb";
+import { CONFIG } from '../config.js';
+import Datastore from '@seald-io/nedb';
 
 class TodoService {
     constructor() {
         this.db = new Datastore({
-            filename: CONFIG.data(process.env.DB_NAME || "todos.db"),
+            filename: CONFIG.data(process.env.DB_NAME || 'todos.db'),
             autoload: true,
         });
     }

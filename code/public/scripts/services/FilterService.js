@@ -8,7 +8,7 @@ export default class FilterService {
             const valA = a[key];
             const valB = b[key];
 
-            if (key === "dateDue" || key === "dateCreated") {
+            if (key === 'dateDue' || key === 'dateCreated') {
                 const dateA = new Date(valA);
                 const dateB = new Date(valB);
 

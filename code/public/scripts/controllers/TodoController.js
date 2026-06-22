@@ -1,5 +1,5 @@
-import Todo from "../models/Todo.js";
-import FilterService from "../services/FilterService.js";
+import Todo from '../models/Todo.js';
+import FilterService from '../services/FilterService.js';
 
 export default class TodoController {
     constructor(view, service) {
@@ -11,9 +11,9 @@ export default class TodoController {
 
         this.filterActive = false;
 
-        const savedSort = localStorage.getItem("sortOption") || "title";
+        const savedSort = localStorage.getItem('sortOption') || 'title';
         const savedDirection =
-            Number(localStorage.getItem("sortDirection")) || 1;
+            Number(localStorage.getItem('sortDirection')) || 1;
         this.sortDirection = savedDirection;
         this.handleSortTodos(savedSort);
 
@@ -40,8 +40,8 @@ export default class TodoController {
         }
         this.currentSort = sort;
 
-        localStorage.setItem("sortOption", sort);
-        localStorage.setItem("sortDirection", this.sortDirection);
+        localStorage.setItem('sortOption', sort);
+        localStorage.setItem('sortDirection', this.sortDirection);
 
         this.view.setActiveSortButton(sort, this.sortDirection);
         this.applyFilterAndSort();
@@ -68,7 +68,6 @@ export default class TodoController {
         } catch (err) {
             this.view.showError(err.message);
         }
-        
     }
 
     handleOpenDialog() {
@@ -79,10 +78,9 @@ export default class TodoController {
         try {
             const todo = await this.service.getTodoById(id);
             this.view.openEditDialog(todo);
-        } catch(err) {
+        } catch (err) {
             this.view.showError(err.message);
         }
-        
     }
 
     handleCloseDialog(event) {
@@ -111,21 +109,20 @@ export default class TodoController {
                 const created = await this.service.saveTodo(newTodo);
                 this.view.setEditingId(created.id);
             }
-            if (formData.action === "create-overview") {
+            if (formData.action === 'create-overview') {
                 this.view.closeDialog();
             }
             await this.applyFilterAndSort();
         } catch (err) {
             this.view.showFormError(err.message);
         }
-        
     }
 
     async handleDeleteTodo(id) {
         try {
             await this.service.deleteTodo(id);
             await this.applyFilterAndSort();
-        } catch(err) {
+        } catch (err) {
             this.view.showError(err.message);
         }
     }

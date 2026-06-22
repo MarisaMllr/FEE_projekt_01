@@ -1,5 +1,5 @@
-import TodoDialogView from "./TodoDialogView.js";
-import TodoListView from "./TodoListView.js";
+import TodoDialogView from './TodoDialogView.js';
+import TodoListView from './TodoListView.js';
 
 export default class TodoView {
     #dialog;
@@ -12,8 +12,8 @@ export default class TodoView {
 
     bindCreateTodo(handler) {
         document
-            .querySelector("#btn-create-todo")
-            .addEventListener("click", handler);
+            .querySelector('#btn-create-todo')
+            .addEventListener('click', handler);
     }
 
     bindCloseDialog(handler) {
