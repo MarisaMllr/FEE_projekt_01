@@ -26,6 +26,9 @@ class TodoController {
     }
 
     async create(req, res) {
+        if (!req.body.title?.trim()) {
+            return res.status(400).json({ message: 'Titel ist erforderlich!'});
+        }
         try {
             const todo = await todoService.create(req.body);
             res.status(201).json(todo);
@@ -38,6 +41,9 @@ class TodoController {
     }
 
     async update(req, res) {
+        if (!req.body.title?.trim()) {
+            return res.status(400).json({ message: 'Titel ist erforderlich!'});
+        }
         try {
             await todoService.update(req.params.id, req.body);
             res.json({ message: 'Todo aktualisiert' });

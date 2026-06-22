@@ -1,14 +1,18 @@
 export default class TodoService {
     async #fetch(url, options = {}) {
+        let res;
         try {
-            const res = await fetch(url, options);
-            if (!res.ok) throw new Error();
-            return res;
+            res = await fetch(url, options);
         } catch {
             throw new Error(
                 'Verbindungsfehler. Bitte versuche es später erneut.',
             );
         }
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.message || 'Ein Fehler ist aufgetreten.');
+        }
+        return res;
     }
 
     async getAllTodos() {
