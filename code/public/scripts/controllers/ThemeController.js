@@ -13,7 +13,7 @@ export default class ThemeController {
 
     handleThemeToggle() {
         const currentTheme = this.themeService.loadTheme();
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = currentTheme === "light" ? "dark" : "light";
         this.themeService.saveTheme(newTheme);
         this.themeView.setTheme(newTheme);
     }

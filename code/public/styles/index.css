@@ -1,14 +1,14 @@
 /* Fonts */
 @font-face {
     font-family: "IBM-Light";
-    src: url('../fonts/IBMPlexMono-Light.ttf');
+    src: url("../fonts/IBMPlexMono-Light.ttf");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "IBM-SemiBold";
-    src: url('../fonts/IBMPlexMono-SemiBold.ttf');
+    src: url("../fonts/IBMPlexMono-SemiBold.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -25,7 +25,7 @@
     --color-primary-hover: #000098;
     --color-primary-active: #000098;
     --color-primary-light: #b8d8ff;
-    
+
     --color-text: #000000;
     --color-text-light: #e7e7e7;
     --color-text-muted: #727272;
@@ -161,12 +161,11 @@ h2 {
     }
 }
 
-
 p {
     font-size: 1rem;
 }
 p.small {
-    font-size: .75rem;
+    font-size: 0.75rem;
 }
 
 /* =========================
@@ -302,9 +301,8 @@ button,
 }
 
 #sort-options.active {
-    display: block
+    display: block;
 }
-
 
 @media screen and (min-width: 800px) {
     .sort__toggle {
@@ -371,10 +369,10 @@ button,
     .todo-content {
         grid-template-columns: repeat(2, 1fr);
     }
- 
+
     .todo-importance {
         grid-row: 4/5;
-        place-self: start ;
+        place-self: start;
     }
 
     .todo-state {
@@ -390,7 +388,6 @@ button,
     .todo-description {
         margin-bottom: var(--space-md);
     }
-
 }
 
 @media screen and (min-width: 800px) {
@@ -403,7 +400,6 @@ button,
         flex-grow: 1;
     }
 }
-
 
 /* =========================
    Dialog
@@ -455,18 +451,18 @@ fieldset.rating {
 }
 
 fieldset.rating input {
-  display: none;
+    display: none;
 }
 
 fieldset.rating label {
-  font-size: 1.5rem;
-  cursor: pointer;
-  filter: grayscale(100%);
-  transition: 0.2s;
+    font-size: 1.5rem;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: 0.2s;
 }
 
 fieldset.rating input:checked ~ label {
-  filter: none;
+    filter: none;
 }
 
 input[type="text"],
@@ -485,7 +481,6 @@ input[type="checkbox"] {
     margin-right: var(--space-xs);
     margin-bottom: var(--space-md);
 }
-
 
 /* =========================
    Footer
