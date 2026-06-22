@@ -92,4 +92,13 @@ export default class TodoDialogView {
     setEditingId(id) {
         this.form.querySelector("#editing-id").value = id;
     }
+
+    showFormError(message) {
+        const existing = this.form.querySelector(".error-message");
+        if (existing) existing.remove();
+        const error = document.createElement('p');
+        error.className = "error-message";
+        error.textContent = message;
+        this.form.prepend(error);
+    }
 }

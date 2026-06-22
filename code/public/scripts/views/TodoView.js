@@ -37,6 +37,12 @@ export default class TodoView {
     renderTodos(todos) {
         this.#list.render(todos);
     }
+    showError(message) {
+        this.#list.showError(message);
+    }
+    showFormError(message) {
+        this.#dialog.showFormError(message);
+    }
     setEditingId(id) {
         this.#dialog.setEditingId(id);
     }

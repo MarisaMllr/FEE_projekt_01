@@ -1,11 +1,21 @@
 export default class TodoService {
+    async #fetch(url, options = {}) {
+        try {
+            const res = await fetch(url, options);
+            if (!res.ok) throw new Error();
+            return res;
+        } catch {
+            throw new Error("Verbindungsfehler. Bitte versuche es später erneut.");
+        }
+    }
+
     async getAllTodos() {
-        const res = await fetch("/api/todos");
+        const res = await this.#fetch("/api/todos");
         return res.json();
     }
 
     async saveTodo(todo) {
-        const res = await fetch("/api/todos", {
+        const res = await this.#fetch("/api/todos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -16,12 +26,12 @@ export default class TodoService {
     }
 
     async getTodoById(id) {
-        const res = await fetch(`/api/todos/${id}`);
+        const res = await this.#fetch(`/api/todos/${id}`);
         return res.json();
     }
 
     async updateTodo(id, data) {
-        await fetch(`/api/todos/${id}`, {
+        await this.#fetch(`/api/todos/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -31,7 +41,7 @@ export default class TodoService {
     }
 
     async deleteTodo(id) {
-        await fetch(`/api/todos/${id}`, {
+        await this.#fetch(`/api/todos/${id}`, {
             method: "DELETE",
         });
     }

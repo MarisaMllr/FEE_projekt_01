@@ -518,3 +518,16 @@ input[type="checkbox"] {
     margin-left: 50%;
     transform: translateX(-50%);
 }
+
+/* =========================
+   Error Message
+========================= */
+.error-message {
+    background-color: var(--color-bg-light);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm);
+    text-align: center;
+    color: var(--color-danger);
+    margin-bottom: var(--space-md);
+}

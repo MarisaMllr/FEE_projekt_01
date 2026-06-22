@@ -48,22 +48,27 @@ export default class TodoController {
     }
 
     async applyFilterAndSort() {
-        let todos = await this.service.getAllTodos();
-        this.view.setDynamicTitle(todos);
+        try {
+            let todos = await this.service.getAllTodos();
+            this.view.setDynamicTitle(todos);
 
-        if (this.filterActive) {
-            todos = FilterService.filterIncomplete(todos);
+            if (this.filterActive) {
+                todos = FilterService.filterIncomplete(todos);
+            }
+
+            if (this.currentSort) {
+                todos = FilterService.sort(
+                    todos,
+                    this.currentSort,
+                    this.sortDirection,
+                );
+            }
+
+            this.view.renderTodos(todos);
+        } catch (err) {
+            this.view.showError(err.message);
         }
-
-        if (this.currentSort) {
-            todos = FilterService.sort(
-                todos,
-                this.currentSort,
-                this.sortDirection,
-            );
-        }
-
-        this.view.renderTodos(todos);
+        
     }
 
     handleOpenDialog() {
@@ -71,8 +76,13 @@ export default class TodoController {
     }
 
     async handleEditTodo(id) {
-        const todo = await this.service.getTodoById(id);
-        this.view.openEditDialog(todo);
+        try {
+            const todo = await this.service.getTodoById(id);
+            this.view.openEditDialog(todo);
+        } catch(err) {
+            this.view.showError(err.message);
+        }
+        
     }
 
     handleCloseDialog(event) {
@@ -81,33 +91,42 @@ export default class TodoController {
     }
 
     async handleSubmitForm(formData) {
-        if (formData.editingId) {
-            await this.service.updateTodo(formData.editingId, {
-                title: formData.title,
-                dateDue: formData.dateDue,
-                importance: formData.importance,
-                description: formData.description,
-                completed: formData.completed,
-            });
-        } else {
-            const newTodo = new Todo(
-                formData.title,
-                formData.dateDue,
-                formData.importance,
-                formData.description,
-                formData.completed,
-            );
-            const created = await this.service.saveTodo(newTodo);
-            this.view.setEditingId(created.id);
+        try {
+            if (formData.editingId) {
+                await this.service.updateTodo(formData.editingId, {
+                    title: formData.title,
+                    dateDue: formData.dateDue,
+                    importance: formData.importance,
+                    description: formData.description,
+                    completed: formData.completed,
+                });
+            } else {
+                const newTodo = new Todo(
+                    formData.title,
+                    formData.dateDue,
+                    formData.importance,
+                    formData.description,
+                    formData.completed,
+                );
+                const created = await this.service.saveTodo(newTodo);
+                this.view.setEditingId(created.id);
+            }
+            if (formData.action === "create-overview") {
+                this.view.closeDialog();
+            }
+            await this.applyFilterAndSort();
+        } catch (err) {
+            this.view.showFormError(err.message);
         }
-        if (formData.action === "create-overview") {
-            this.view.closeDialog();
-        }
-        await this.applyFilterAndSort();
+        
     }
 
     async handleDeleteTodo(id) {
-        await this.service.deleteTodo(id);
-        await this.applyFilterAndSort();
+        try {
+            await this.service.deleteTodo(id);
+            await this.applyFilterAndSort();
+        } catch(err) {
+            this.view.showError(err.message);
+        }
     }
 }

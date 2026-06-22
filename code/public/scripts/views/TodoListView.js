@@ -75,6 +75,12 @@ export default class TodoListView {
         });
     }
 
+    showError(message) {
+        document.querySelector("#todos").innerHTML = `
+            <div class="error-message">${message}</div>
+        `;
+    }
+
     bindDelete(handler) {
         document.querySelector("#todos").addEventListener("click", (event) => {
             const btn = event.target.closest(".btn--delete");
