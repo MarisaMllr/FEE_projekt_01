@@ -62,6 +62,8 @@ Die Applikation ist anschliessend unter [http://127.0.0.1:8080](http://127.0.0.1
 | `PORT`     | `8080`      | Port des Servers             |
 | `DB_NAME`  | `todos.db`  | Dateiname der NeDB-Datenbank |
 
+> **Hinweis:** Die Datenbankdatei wird beim ersten Start automatisch unter `code/data/<DB_NAME>` erstellt. Um die Daten zurückzusetzen, genügt es, diese Datei zu löschen.
+
 ---
 
 ## 2. How to Use
