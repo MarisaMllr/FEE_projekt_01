@@ -9,20 +9,16 @@ mkdirSync(CONFIG.data(''), { recursive: true });
 
 const app = express();
 
-const hostname = process.env.HOSTNAME || '127.0.0.1';
-const port = process.env.PORT || 8080;
+const hostname = process.env.HOSTNAME ?? '127.0.0.1';
+const port = Number(process.env.PORT) || 8080;
 
 app.use(express.static(CONFIG.public));
 app.use(express.json());
 app.use('/api/todos', todoRouter);
-app.use((req, res) => {
+app.use((_req, res) => {
     res.redirect('/');
 });
 
-app.listen(port, hostname, (error) => {
-    if (error) {
-        console.error(error);
-    } else {
-        console.log(`Example app listening at http://${hostname}:${port}`);
-    }
+app.listen(port, hostname, () => {
+    console.log(`Example app listening at http://${hostname}:${port}`);
 });

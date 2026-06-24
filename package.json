@@ -7,22 +7,29 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "start": "node code/server/index.js",
-        "start:watch": "node --watch code/server/index.js",
-        "lint": "eslint \"**/*.js\" \"**/*.css\"",
-        "format": "prettier --write \"**/*.{js,cjs,mjs,css,html,json,md}\"",
-        "format:check": "prettier --check \"**/*.{js,cjs,mjs,css,html,json,md}\""
+        "start": "tsx code/server/index.ts",
+        "start:watch": "tsx watch code/server/index.ts",
+        "build": "tsc",
+        "start:prod": "node dist/code/server/index.js",
+        "lint": "eslint \"**/*.ts\" \"**/*.css\"",
+        "format": "prettier --write \"**/*.{ts,css,html,json,md}\"",
+        "format:check": "prettier --check \"**/*.{ts,css,html,json,md}\""
     },
     "devDependencies": {
         "@eslint/css": "^1.1.0",
         "@eslint/js": "^10.0.1",
+        "@types/express": "^5.0.6",
+        "@types/node": "^26.0.0",
         "eslint": "^10.2.0",
         "globals": "^17.5.0",
-        "prettier": "3.8.2"
+        "prettier": "3.8.2",
+        "tsx": "^4.22.4",
+        "typescript": "^6.0.3"
     },
     "dependencies": {
         "@seald-io/nedb": "^4.1.2",
         "dotenv": "^17.4.2",
-        "express": "^5.2.1"
+        "express": "^5.2.1",
+        "zod": "^4.4.3"
     }
 }
