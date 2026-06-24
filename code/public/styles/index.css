@@ -215,6 +215,9 @@ button,
 .btn--sort.active-desc::after {
     content: ' ▲';
 }
+.btn--filter.active {
+    background-color: var(--color-primary-hover);
+}
 
 /* =========================
    Main Header
