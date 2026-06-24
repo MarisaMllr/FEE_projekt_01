@@ -29,6 +29,7 @@ class TodoService {
 
     async getById(id) {
         const todo = await this.db.findOneAsync({ _id: id });
+        if (!todo) return null;
         return this.#mapId(todo);
     }
 

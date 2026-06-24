@@ -16,6 +16,9 @@ class TodoController {
     async getById(req, res) {
         try {
             const todo = await todoService.getById(req.params.id);
+            if (!todo) {
+                return res.status(404).json({ message: 'Todo nicht gefunden' });
+            }
             res.json(todo);
         } catch (err) {
             res.status(500).json({
@@ -27,7 +30,7 @@ class TodoController {
 
     async create(req, res) {
         if (!req.body.title?.trim()) {
-            return res.status(400).json({ message: 'Titel ist erforderlich!'});
+            return res.status(400).json({ message: 'Titel ist erforderlich!' });
         }
         try {
             const todo = await todoService.create(req.body);
@@ -42,7 +45,7 @@ class TodoController {
 
     async update(req, res) {
         if (!req.body.title?.trim()) {
-            return res.status(400).json({ message: 'Titel ist erforderlich!'});
+            return res.status(400).json({ message: 'Titel ist erforderlich!' });
         }
         try {
             await todoService.update(req.params.id, req.body);
