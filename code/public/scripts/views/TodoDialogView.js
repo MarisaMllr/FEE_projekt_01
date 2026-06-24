@@ -26,16 +26,14 @@ export default class TodoDialogView {
 
     openCreate() {
         this.#openDialog();
-        this.form.querySelector('.btn--save').innerText = 'Erstellen';
-        this.form.querySelector('.btn--save-overview').innerText =
-            'Erstellen & Übersicht';
+        this.btnSave.innerText = 'Erstellen';
+        this.btnSaveOverview.innerText = 'Erstellen & Übersicht';
     }
 
     openEdit(todo) {
         this.#openDialog();
-        this.form.querySelector('.btn--save').innerText = 'Speichern';
-        this.form.querySelector('.btn--save-overview').innerText =
-            'Speichern & Übersicht';
+        this.form.btnSave.innerText = 'Speichern';
+        this.form.btnSaveOverview.innerText = 'Speichern & Übersicht';
         this.form.querySelector('#editing-id').value = todo.id;
         this.form.querySelector('#title').value = todo.title;
         this.form.querySelector('#date_due').value = todo.dateDue;
@@ -53,19 +51,6 @@ export default class TodoDialogView {
         document.querySelector('#editing-id').value = '';
     }
 
-    bindResetForm(handler) {
-        this.form.addEventListener('reset', (event) => {
-            event.preventDefault();
-            handler();
-        });
-    }
-
-    bindClose(handler) {
-        document
-            .querySelector('.dialog__actions .btn--close')
-            .addEventListener('click', handler);
-    }
-
     bindSubmit(handler) {
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -78,7 +63,6 @@ export default class TodoDialogView {
                 importance: formData.get('importance'),
                 description: formData.get('description'),
                 completed: formData.get('completed') === 'on',
-
                 action: submitButton?.value || null,
             });
 
@@ -87,6 +71,12 @@ export default class TodoDialogView {
                 this.btnSaveOverview.innerText = 'Speichern & Übersicht';
             }
         });
+    }
+
+    bindClose(handler) {
+        document
+            .querySelector('.dialog__actions .btn--close')
+            .addEventListener('click', handler);
     }
 
     setEditingId(id) {

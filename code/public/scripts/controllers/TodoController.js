@@ -6,9 +6,7 @@ export default class TodoController {
         this.view = view;
         this.service = service;
 
-        this.sortDirection = 1;
         this.currentSort = null;
-
         this.filterActive = false;
 
         const savedSort = localStorage.getItem('sortOption') || 'title';
@@ -22,29 +20,9 @@ export default class TodoController {
         this.view.bindEditTodo(this.handleEditTodo.bind(this));
         this.view.bindSubmitForm(this.handleSubmitForm.bind(this));
         this.view.bindSortTodos(this.handleSortTodos.bind(this));
+        this.view.bindSortToggle();
         this.view.bindFilterTodos(this.handleFilterTodos.bind(this));
         this.view.bindDeleteTodo(this.handleDeleteTodo.bind(this));
-    }
-
-    handleFilterTodos() {
-        this.filterActive = !this.filterActive;
-        this.view.setFilterButton(this.filterActive);
-        this.applyFilterAndSort();
-    }
-
-    handleSortTodos(sort) {
-        if (this.currentSort === sort) {
-            this.sortDirection *= -1;
-        } else {
-            this.sortDirection = 1;
-        }
-        this.currentSort = sort;
-
-        localStorage.setItem('sortOption', sort);
-        localStorage.setItem('sortDirection', this.sortDirection);
-
-        this.view.setActiveSortButton(sort, this.sortDirection);
-        this.applyFilterAndSort();
     }
 
     async applyFilterAndSort() {
@@ -70,8 +48,34 @@ export default class TodoController {
         }
     }
 
+    handleFilterTodos() {
+        this.filterActive = !this.filterActive;
+        this.view.setFilterButton(this.filterActive);
+        this.applyFilterAndSort();
+    }
+
+    handleSortTodos(sort) {
+        if (this.currentSort === sort) {
+            this.sortDirection *= -1;
+        } else {
+            this.sortDirection = 1;
+        }
+        this.currentSort = sort;
+
+        localStorage.setItem('sortOption', sort);
+        localStorage.setItem('sortDirection', this.sortDirection);
+
+        this.view.setActiveSortButton(sort, this.sortDirection);
+        this.applyFilterAndSort();
+    }
+
     handleOpenDialog() {
         this.view.openCreateDialog();
+    }
+
+    handleCloseDialog(event) {
+        event.preventDefault();
+        this.view.closeDialog();
     }
 
     async handleEditTodo(id) {
@@ -81,11 +85,6 @@ export default class TodoController {
         } catch (err) {
             this.view.showError(err.message);
         }
-    }
-
-    handleCloseDialog(event) {
-        event.preventDefault();
-        this.view.closeDialog();
     }
 
     async handleSubmitForm(formData) {

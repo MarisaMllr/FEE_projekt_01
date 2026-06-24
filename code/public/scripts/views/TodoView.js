@@ -16,15 +16,7 @@ export default class TodoView {
             .addEventListener('click', handler);
     }
 
-    bindCloseDialog(handler) {
-        this.#dialog.bindClose(handler);
-    }
-    bindSubmitForm(handler) {
-        this.#dialog.bindSubmit(handler);
-    }
-    bindEditTodo(handler) {
-        this.#list.bindEdit(handler);
-    }
+    //dialogView
     openCreateDialog() {
         this.#dialog.openCreate();
     }
@@ -34,11 +26,11 @@ export default class TodoView {
     closeDialog() {
         this.#dialog.close();
     }
-    renderTodos(todos) {
-        this.#list.render(todos);
+    bindSubmitForm(handler) {
+        this.#dialog.bindSubmit(handler);
     }
-    showError(message) {
-        this.#list.showError(message);
+    bindCloseDialog(handler) {
+        this.#dialog.bindClose(handler);
     }
     showFormError(message) {
         this.#dialog.showFormError(message);
@@ -46,8 +38,19 @@ export default class TodoView {
     setEditingId(id) {
         this.#dialog.setEditingId(id);
     }
+
+    //listView
+    renderTodos(todos) {
+        this.#list.render(todos);
+    }
+    showError(message) {
+        this.#list.showError(message);
+    }
     bindSortTodos(sort) {
         this.#list.bindSort(sort);
+    }
+    bindSortToggle() {
+        this.#list.bindSortToggle();
     }
     bindFilterTodos(handler) {
         this.#list.bindFilterTodos(handler);
@@ -63,5 +66,8 @@ export default class TodoView {
     }
     setDynamicTitle(todos) {
         this.#list.setDynamicTitle(todos);
+    }
+    bindEditTodo(handler) {
+        this.#list.bindEdit(handler);
     }
 }

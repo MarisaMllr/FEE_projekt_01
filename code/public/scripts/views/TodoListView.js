@@ -1,4 +1,13 @@
 export default class TodoListView {
+    bindSortToggle() {
+        const toggleBtn = document.querySelector('.sort__toggle');
+        const sortOptions = document.querySelector('#sort-options');
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = sortOptions.classList.toggle('active');
+            toggleBtn.setAttribute('aria-expanded', isOpen);
+        });
+    }
+
     bindSort(handler) {
         const sortsOptions = document.querySelectorAll('.btn--sort');
         sortsOptions.forEach((btn) =>
@@ -13,20 +22,19 @@ export default class TodoListView {
         filterBtn.addEventListener('click', () => handler());
     }
 
-    setActiveSortButton(sort, direction) {
-        document.querySelectorAll('.btn--sort').forEach((btn) => {
-            btn.classList.remove('active-asc', 'active-desc');
+    // event delegation catches dynamically rendered buttons
+    bindEdit(handler) {
+        document.querySelector('#todos').addEventListener('click', (event) => {
+            const btn = event.target.closest('.btn--edit');
+            if (btn) handler(btn.dataset.id);
         });
-        const activeClass = direction === 1 ? 'active-asc' : 'active-desc';
-        document
-            .querySelector(`[data-sort="${sort}"]`)
-            .classList.add(activeClass);
     }
 
-    setFilterButton(active) {
-        const btn = document.querySelector('.btn--filter');
-        btn.classList.toggle('active', active);
-        btn.textContent = active ? 'Alle' : 'Offene';
+    bindDelete(handler) {
+        document.querySelector('#todos').addEventListener('click', (event) => {
+            const btn = event.target.closest('.btn--delete');
+            if (btn) handler(btn.dataset.id);
+        });
     }
 
     render(todos) {
@@ -76,42 +84,28 @@ export default class TodoListView {
     }
 
     showError(message) {
-        document.querySelector('#todos').innerHTML = `
-            <div class="error-message">${message}</div>
-        `;
+        const container = document.querySelector('#todos');
+        container.innerHTML = '';
+        const error = document.createElement('div');
+        error.className = 'error-message';
+        error.textContent = message;
+        container.appendChild(error);
     }
 
-    bindDelete(handler) {
-        document.querySelector('#todos').addEventListener('click', (event) => {
-            const btn = event.target.closest('.btn--delete');
-            if (btn) handler(btn.dataset.id);
+    setActiveSortButton(sort, direction) {
+        document.querySelectorAll('.btn--sort').forEach((btn) => {
+            btn.classList.remove('active-asc', 'active-desc');
         });
+        const activeClass = direction === 1 ? 'active-asc' : 'active-desc';
+        document
+            .querySelector(`[data-sort="${sort}"]`)
+            .classList.add(activeClass);
     }
 
-    // event delegation catches dynamically rendered buttons
-    bindEdit(handler) {
-        document.querySelector('#todos').addEventListener('click', (event) => {
-            const btn = event.target.closest('.btn--edit');
-            if (btn) handler(btn.dataset.id);
-        });
-    }
-
-    #getRelativeDueDate(dateDue) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const due = new Date(dateDue);
-        if (!isNaN(due)) {
-            due.setHours(0, 0, 0, 0);
-            const diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
-
-            if (diffDays === 0) return 'Heute fällig';
-            if (diffDays === 1) return 'in 1 Tag';
-            if (diffDays > 1) return `in ${diffDays} Tagen`;
-            if (diffDays === -1) return 'vor 1 Tag';
-            return `vor ${Math.abs(diffDays)} Tagen`;
-        } else {
-            return 'Irgendwann';
-        }
+    setFilterButton(active) {
+        const btn = document.querySelector('.btn--filter');
+        btn.classList.toggle('active', active);
+        btn.textContent = active ? 'Alle' : 'Offene';
     }
 
     setDynamicTitle(todos) {
@@ -132,5 +126,23 @@ export default class TodoListView {
             message = 'Alles erledigt!';
         }
         document.querySelector('.todos__header__message').textContent = message;
+    }
+
+    #getRelativeDueDate(dateDue) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const due = new Date(dateDue);
+        if (!isNaN(due)) {
+            due.setHours(0, 0, 0, 0);
+            const diffDays = Math.round((due - today) / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) return 'Heute fällig';
+            if (diffDays === 1) return 'in 1 Tag';
+            if (diffDays > 1) return `in ${diffDays} Tagen`;
+            if (diffDays === -1) return 'vor 1 Tag';
+            return `vor ${Math.abs(diffDays)} Tagen`;
+        } else {
+            return 'Irgendwann';
+        }
     }
 }
