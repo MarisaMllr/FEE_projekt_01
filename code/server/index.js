@@ -10,7 +10,7 @@ mkdirSync(CONFIG.data(''), { recursive: true });
 const app = express();
 
 const hostname = process.env.HOSTNAME || '127.0.0.1';
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 
 app.use(express.static(CONFIG.public));
 app.use(express.json());
