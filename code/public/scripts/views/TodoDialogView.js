@@ -32,8 +32,8 @@ export default class TodoDialogView {
 
     openEdit(todo) {
         this.#openDialog();
-        this.form.btnSave.innerText = 'Speichern';
-        this.form.btnSaveOverview.innerText = 'Speichern & Übersicht';
+        this.btnSave.innerText = 'Speichern';
+        this.btnSaveOverview.innerText = 'Speichern & Übersicht';
         this.form.querySelector('#editing-id').value = todo.id;
         this.form.querySelector('#title').value = todo.title;
         this.form.querySelector('#date_due').value = todo.dateDue;
